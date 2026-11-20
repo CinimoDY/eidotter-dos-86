@@ -15,6 +15,14 @@
     "diffAdded": "#122010",
     "diffRemoved": "#430500",
     "userMessageBackground": "#1A1000",
-    "rate_limit_fill": "#FFB000"
+    "rate_limit_fill": "#FFB000",
+    "red_FOR_SUBAGENTS_ONLY": "#FF5555",
+    "green_FOR_SUBAGENTS_ONLY": "#55FF55",
+    "yellow_FOR_SUBAGENTS_ONLY": "#FFFF55",
+    "blue_FOR_SUBAGENTS_ONLY": "#9999FF",
+    "purple_FOR_SUBAGENTS_ONLY": "#FF55FF",
+    "pink_FOR_SUBAGENTS_ONLY": "#FF9AFF",
+    "cyan_FOR_SUBAGENTS_ONLY": "#55FFFF",
+    "orange_FOR_SUBAGENTS_ONLY": "#FFB000"
   }
 }

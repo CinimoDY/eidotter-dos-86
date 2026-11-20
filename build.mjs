@@ -34,6 +34,7 @@ function group(path) {
 
 const ansi = group('ansi');
 const role = group('role');
+const signal = group('color.signal');
 const ANSI_ORDER = [
   'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white',
   'brightBlack', 'brightRed', 'brightGreen', 'brightYellow',
@@ -89,6 +90,15 @@ out['claude-code.theme.json'] = JSON.stringify(
       diffRemoved: role.removedFill,
       userMessageBackground: role.raised,
       rate_limit_fill: role.text,
+      // Session and subagent colours (the names /color offers).
+      red_FOR_SUBAGENTS_ONLY: signal.red,
+      green_FOR_SUBAGENTS_ONLY: signal.greenBright,
+      yellow_FOR_SUBAGENTS_ONLY: signal.yellow,
+      blue_FOR_SUBAGENTS_ONLY: signal.blueBright,
+      purple_FOR_SUBAGENTS_ONLY: signal.magenta,
+      pink_FOR_SUBAGENTS_ONLY: signal.magentaBright,
+      cyan_FOR_SUBAGENTS_ONLY: signal.cyanBright,
+      orange_FOR_SUBAGENTS_ONLY: role.text,
     },
   },
   null,
