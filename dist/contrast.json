@@ -1,0 +1,74 @@
+{
+  "tint": {
+    "hex": "#1A1000",
+    "onScreen": 1.1
+  },
+  "amberDim": {
+    "hex": "#9A5700",
+    "onScreen": 3.67
+  },
+  "amberSoft": {
+    "hex": "#B87C1A",
+    "onScreen": 5.82
+  },
+  "amber": {
+    "hex": "#FFB000",
+    "onScreen": 11.24
+  },
+  "amberBright": {
+    "hex": "#FDCA9F",
+    "onScreen": 13.86
+  },
+  "white": {
+    "hex": "#FFFCF7",
+    "onScreen": 20.13
+  },
+  "red": {
+    "hex": "#FF5555",
+    "onScreen": 6.55
+  },
+  "redBright": {
+    "hex": "#FF8888",
+    "onScreen": 8.95
+  },
+  "green": {
+    "hex": "#00AA00",
+    "onScreen": 6.62
+  },
+  "greenBright": {
+    "hex": "#55FF55",
+    "onScreen": 15.52
+  },
+  "yellow": {
+    "hex": "#FFFF55",
+    "onScreen": 19.31
+  },
+  "yellowBright": {
+    "hex": "#FFFF99",
+    "onScreen": 19.63
+  },
+  "blue": {
+    "hex": "#5555FF",
+    "onScreen": 4.05
+  },
+  "blueBright": {
+    "hex": "#9999FF",
+    "onScreen": 8.2
+  },
+  "magenta": {
+    "hex": "#FF55FF",
+    "onScreen": 7.84
+  },
+  "magentaBright": {
+    "hex": "#FF9AFF",
+    "onScreen": 11.1
+  },
+  "cyan": {
+    "hex": "#00AAAA",
+    "onScreen": 7.19
+  },
+  "cyanBright": {
+    "hex": "#55FFFF",
+    "onScreen": 16.81
+  }
+}

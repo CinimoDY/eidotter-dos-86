@@ -1,0 +1,380 @@
+<title>eiDotter DOS-86</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap">
+<style>
+  /* Layout: one left-aligned column on the tube's own black; the terminal specimen is the only framed object. */
+  :root {
+    color-scheme: dark;
+    --screen: #050300;
+    --tint: #1A1000;
+    --amber-dim: #9A5700;
+    --amber-soft: #B87C1A;
+    --amber: #FFB000;
+    --amber-bright: #FDCA9F;
+    --white: #FFFCF7;
+    --red: #FF5555;
+    --green: #00AA00;
+    --green-bright: #55FF55;
+    --yellow: #FFFF55;
+    --blue: #5555FF;
+    --blue-bright: #9999FF;
+    --magenta: #FF55FF;
+    --cyan: #00AAAA;
+    --added: #122010;
+    --removed: #430500;
+    --display: "VT323", "Perfect DOS VGA 437", "Courier New", monospace;
+    --body: "JetBrains Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
+    --s1: 4px; --s2: 8px; --s4: 16px; --s6: 24px; --s8: 32px; --s12: 48px; --s16: 64px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--screen);
+    color: var(--amber);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-block: var(--s12) var(--s16);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .page { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--s16); }
+  section { display: flex; flex-direction: column; gap: var(--s6); min-width: 0; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 400; color: var(--amber-bright); margin: 0; text-wrap: balance; line-height: 1.05; }
+  h1 { font-size: clamp(56px, 11vw, 104px); letter-spacing: 0.01em; }
+  h2 { font-size: 40px; }
+  h3 { font-size: 26px; color: var(--amber); }
+  p { margin: 0; max-width: 66ch; }
+  .lede { font-size: 18px; color: var(--amber-bright); max-width: 60ch; }
+  .dim { color: var(--amber-soft); }
+  code, .mono { font-family: var(--body); font-variant-numeric: tabular-nums; }
+  code { color: var(--amber-bright); }
+  a { color: var(--blue-bright); }
+  :focus-visible { outline: 2px solid var(--amber-bright); outline-offset: 2px; }
+
+  header { display: flex; flex-direction: column; gap: var(--s6); }
+  .kicker { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber-soft); }
+
+  /* Terminal specimen */
+  .tube { position: relative; border: 2px solid var(--amber-dim); background: var(--screen); overflow: hidden; }
+  .tube pre {
+    margin: 0; padding: var(--s6); font-family: var(--body); font-size: 14px; line-height: 1.5;
+    overflow-x: auto; color: var(--amber); white-space: pre;
+  }
+  .tube .t-dim { color: var(--amber-soft); }
+  .tube .t-strong { color: var(--amber-bright); }
+  .tube .t-white { color: var(--white); }
+  .tube .t-err { color: var(--red); }
+  .tube .t-ok { color: var(--green-bright); }
+  .tube .t-warn { color: var(--yellow); }
+  .tube .t-prompt { color: var(--blue-bright); }
+  .tube .t-info { color: var(--cyan); }
+  .tube .t-add { background: var(--added); color: var(--green-bright); }
+  .tube .t-del { background: var(--removed); color: var(--red); }
+  .tube .t-user { background: var(--tint); }
+  .tube .t-rule { color: var(--amber-dim); }
+  .tube.on pre { text-shadow: 0 0 1.6px currentColor, 0 0 4.5px color-mix(in srgb, currentColor 45%, transparent); }
+  .tube.on::before, .tube.on::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+  .tube.on::before {
+    background:
+      repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) 1.5px, rgba(0,0,0,0.20) 3px),
+      repeating-linear-gradient(to right, rgba(255,0,0,0.06) 0 1px, rgba(0,255,0,0.06) 1px 2px, rgba(0,0,255,0.06) 2px 3px);
+  }
+  .tube.on::after { background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.22) 100%); }
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4); }
+  button {
+    font-family: var(--body); font-size: 14px; color: var(--screen); background: var(--amber);
+    border: 2px solid var(--amber); padding: var(--s2) var(--s4); cursor: pointer;
+  }
+  button:hover { background: var(--amber-bright); border-color: var(--amber-bright); }
+  button[aria-pressed="false"] { background: var(--screen); color: var(--amber); }
+
+  /* Principles */
+  .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--s8) var(--s12); }
+  .principles div { display: flex; flex-direction: column; gap: var(--s2); min-width: 0; }
+
+  /* Swatches */
+  .ladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: var(--s4); }
+  .sw { display: flex; flex-direction: column; gap: var(--s2); min-width: 0; }
+  .chip { height: 72px; border: 1px solid var(--amber-dim); }
+  .sw b { font-weight: 500; color: var(--amber-bright); }
+  .sw span { font-size: 13px; color: var(--amber-soft); font-variant-numeric: tabular-nums; }
+  .sample { font-size: 14px; }
+
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: var(--s2) var(--s4) var(--s2) 0; border-bottom: 1px solid var(--amber-dim); vertical-align: top; }
+  th { font-weight: 500; color: var(--amber-soft); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  td.num, th.num { text-align: right; padding-right: var(--s6); white-space: nowrap; }
+  td .dot { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--amber-dim); vertical-align: -2px; margin-right: var(--s2); }
+  td code { white-space: nowrap; }
+
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s8) var(--s12); }
+  .two > div { display: flex; flex-direction: column; gap: var(--s4); min-width: 0; }
+  ul { margin: 0; padding-left: 1.2em; max-width: 66ch; display: flex; flex-direction: column; gap: var(--s2); }
+  footer { color: var(--amber-soft); font-size: 13px; border-top: 1px solid var(--amber-dim); padding-top: var(--s4); }
+</style>
+
+<div class="page">
+
+<header>
+  <div class="kicker">An eiDotter theme for the terminal · tokens v1 · 20 November 2026</div>
+  <h1>DOS-86</h1>
+  <p class="lede">An amber monochrome monitor for the terminal, with the six colours that carry meaning left honest. Built for Claude Code in Windows Terminal, and stored as tokens so other terminals and systems can take the same values.</p>
+
+  <div class="tube on" id="tube" aria-label="Specimen of a Claude Code session in the theme">
+<pre><span class="t-rule">╭──────────────────────────────────────────────────────────────╮</span>
+<span class="t-rule">│</span> <span class="t-strong">✻ Claude Code</span>   <span class="t-dim">~/Coding/eidotter-terminal</span>                   <span class="t-rule">│</span>
+<span class="t-rule">╰──────────────────────────────────────────────────────────────╯</span>
+
+<span class="t-user">&gt; make the scanlines a little calmer                            </span>
+
+<span class="t-strong">●</span> Lowering the scanline intensity token and rebuilding.
+
+<span class="t-strong">●</span> <span class="t-white">Update</span>(tokens/dos-86.tokens.json)
+  <span class="t-dim">⎿  1 line changed</span>
+<span class="t-del">  - "intensity": { "$value": 0.28 }                              </span>
+<span class="t-add">  + "intensity": { "$value": 0.20 }                              </span>
+
+<span class="t-strong">●</span> <span class="t-white">Bash</span>(node build.mjs)
+  <span class="t-dim">⎿  Wrote 7 files to dist/ and 9 constants to dos-86.hlsl</span>
+
+<span class="t-ok">✓</span> Build finished
+<span class="t-warn">⚠</span> <span class="t-warn">Windows Terminal reloads the shader when settings are saved</span>
+<span class="t-err">✗</span> <span class="t-err">Example of an error line: constant not found</span>
+<span class="t-info">⏸ plan mode</span>   <span class="t-prompt">Allow this edit?  1. Yes   2. No</span>
+
+<span class="t-rule">────────────────────────────────────────────────────────────────</span>
+<span class="t-rule">&gt;</span> <span class="t-dim">_</span>
+ .../Coding/eidotter-terminal <span class="t-strong">main</span> <span class="t-dim">?M ctx:62%</span></pre>
+  </div>
+  <div class="controls">
+    <button id="toggle" type="button" aria-pressed="true">Monitor: on</button>
+    <span class="dim">This specimen imitates the shader in CSS. The real effect is drawn per pixel by the terminal.</span>
+  </div>
+</header>
+
+<section>
+  <h2>Principles</h2>
+  <div class="principles">
+    <div>
+      <h3>One phosphor</h3>
+      <p>Everything that is only text comes from a single amber at four brightness levels. Hierarchy is brightness, the way it was on a monochrome tube.</p>
+    </div>
+    <div>
+      <h3>Honest signals</h3>
+      <p>Red means removed or failed, green means added or passed, yellow warns. These are never tinted amber. An all-amber scheme looks right and makes a diff unreadable.</p>
+    </div>
+    <div>
+      <h3>Read for hours</h3>
+      <p>Every effect is set for a working day in front of it. Scanlines at a third of the web strength, no flicker, and no colour used for text below a contrast it can carry.</p>
+    </div>
+    <div>
+      <h3>Physics, not decoration</h3>
+      <p>The glow comes from the lit pixels themselves and spreads to their neighbours. Nothing is painted on top that a tube would not have produced.</p>
+    </div>
+    <div>
+      <h3>Roles before colours</h3>
+      <p>Each target maps from a role such as <code>textDim</code> or <code>error</code>, not from a hex value. Change the phosphor and every terminal follows.</p>
+    </div>
+    <div>
+      <h3>One source</h3>
+      <p>A single token file produces the files for Windows Terminal, Claude Code, Ghostty, kitty, Alacritty, CSS and the shader constants.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Where it comes from</h2>
+  <div class="two">
+    <div>
+      <h3>The amber monitor</h3>
+      <p>Monochrome monitors of the 1980s drew text with one phosphor. Amber was sold as the easier colour to read for long sessions. The theme takes its amber, <code>#FFB000</code>, from eiDotter, whose token describes it as P3 phosphor at 602nm.</p>
+    </div>
+    <div>
+      <h3>The CGA palette</h3>
+      <p>IBM's Color Graphics Adapter of 1981 offered sixteen colours from four bits: red, green, blue and intensity. The signal colours here are those values. The dark red and dark blue are skipped for text, for the reason in the palette section.</p>
+    </div>
+    <div>
+      <h3>eiDotter's rules</h3>
+      <p>Two lines from the design system's principles set the bar: "Phosphor as physics, not decoration", and "The aesthetic is a constraint the theme holds itself to, not decoration".</p>
+    </div>
+    <div>
+      <h3>The scheme it replaces</h3>
+      <p>The earlier terminal scheme mapped all sixteen slots to shades of amber and orange. It was pure, and it erased the difference between an added and a removed line. That failure is the reason for the second principle.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The phosphor</h2>
+  <p>Seven values from black to white. The number under each is its contrast against the screen colour; 4.5 is the WCAG AA line for body text.</p>
+  <div class="ladder">
+    <div class="sw"><div class="chip" style="background:#050300"></div><b>black</b><span>#050300 · screen</span></div>
+    <div class="sw"><div class="chip" style="background:#1A1000"></div><b>tint</b><span>#1A1000 · 1.10</span></div>
+    <div class="sw"><div class="chip" style="background:#9A5700"></div><b>amberDim</b><span>#9A5700 · 3.67</span></div>
+    <div class="sw"><div class="chip" style="background:#B87C1A"></div><b>amberSoft</b><span>#B87C1A · 5.82</span></div>
+    <div class="sw"><div class="chip" style="background:#FFB000"></div><b>amber</b><span>#FFB000 · 11.24</span></div>
+    <div class="sw"><div class="chip" style="background:#FDCA9F"></div><b>amberBright</b><span>#FDCA9F · 13.86</span></div>
+    <div class="sw"><div class="chip" style="background:#FFFCF7"></div><b>white</b><span>#FFFCF7 · 20.13</span></div>
+  </div>
+  <ul>
+    <li><code>black</code> is a warm near-black, because an unlit tube is not pure black.</li>
+    <li><code>amberDim</code> is for borders and selection only. At 3.67 it is too dark for running text.</li>
+    <li><code>amberSoft</code> is the dimmest amber that passes AA, so it takes every "secondary text" job.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The signals</h2>
+  <p>Twelve colours for meaning. Eight are CGA values. Four lighter steps are additions, marked "new", for terminal slots that need a brighter partner.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th class="num">Contrast</th><th>Meaning</th><th>Origin</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:#FF5555"></span>red</td><td><code>#FF5555</code></td><td class="num">6.55</td><td>error, removed</td><td>CGA bright red</td></tr>
+      <tr><td><span class="dot" style="background:#FF8888"></span>redBright</td><td><code>#FF8888</code></td><td class="num">8.95</td><td></td><td>new</td></tr>
+      <tr><td><span class="dot" style="background:#00AA00"></span>green</td><td><code>#00AA00</code></td><td class="num">6.62</td><td>added</td><td>CGA green</td></tr>
+      <tr><td><span class="dot" style="background:#55FF55"></span>greenBright</td><td><code>#55FF55</code></td><td class="num">15.52</td><td>success</td><td>CGA bright green</td></tr>
+      <tr><td><span class="dot" style="background:#FFFF55"></span>yellow</td><td><code>#FFFF55</code></td><td class="num">19.31</td><td>warning</td><td>CGA yellow</td></tr>
+      <tr><td><span class="dot" style="background:#FFFF99"></span>yellowBright</td><td><code>#FFFF99</code></td><td class="num">19.63</td><td></td><td>new</td></tr>
+      <tr><td><span class="dot" style="background:#5555FF"></span>blue</td><td><code>#5555FF</code></td><td class="num">4.05</td><td>decoration only</td><td>CGA bright blue</td></tr>
+      <tr><td><span class="dot" style="background:#9999FF"></span>blueBright</td><td><code>#9999FF</code></td><td class="num">8.20</td><td>prompts, links</td><td>new</td></tr>
+      <tr><td><span class="dot" style="background:#FF55FF"></span>magenta</td><td><code>#FF55FF</code></td><td class="num">7.84</td><td>accent</td><td>CGA bright magenta</td></tr>
+      <tr><td><span class="dot" style="background:#FF9AFF"></span>magentaBright</td><td><code>#FF9AFF</code></td><td class="num">11.10</td><td></td><td>new</td></tr>
+      <tr><td><span class="dot" style="background:#00AAAA"></span>cyan</td><td><code>#00AAAA</code></td><td class="num">7.19</td><td>info, plan mode</td><td>CGA cyan</td></tr>
+      <tr><td><span class="dot" style="background:#55FFFF"></span>cyanBright</td><td><code>#55FFFF</code></td><td class="num">16.81</td><td></td><td>CGA bright cyan</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul>
+    <li>CGA's dark red <code>#AA0000</code> reaches about 2.6 on this screen and its dark blue <code>#0000AA</code> less, so the bright variants sit in the normal slots.</li>
+    <li>Even bright blue only reaches 4.05, below the AA line. Anything that must be read in blue uses <code>blueBright</code>.</li>
+    <li>Yellow is lemon, not gold, so a warning stands apart from amber body text.</li>
+    <li>Two dark fills sit behind diff lines: <code>#122010</code> for added and <code>#430500</code> for removed, both from eiDotter's alert surfaces.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>The sixteen slots</h2>
+  <p>How the tokens fill a terminal's ANSI palette. Two slots break with convention on purpose.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Slot</th><th>Normal</th><th>Bright</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>black</td><td><span class="dot" style="background:#050300"></span><code>#050300</code></td><td><span class="dot" style="background:#B87C1A"></span><code>#B87C1A</code></td><td>Programs print secondary text in bright black, so it is the readable soft amber, not a grey.</td></tr>
+      <tr><td>red</td><td><span class="dot" style="background:#FF5555"></span><code>#FF5555</code></td><td><span class="dot" style="background:#FF8888"></span><code>#FF8888</code></td><td></td></tr>
+      <tr><td>green</td><td><span class="dot" style="background:#00AA00"></span><code>#00AA00</code></td><td><span class="dot" style="background:#55FF55"></span><code>#55FF55</code></td><td></td></tr>
+      <tr><td>yellow</td><td><span class="dot" style="background:#FFFF55"></span><code>#FFFF55</code></td><td><span class="dot" style="background:#FFFF99"></span><code>#FFFF99</code></td><td></td></tr>
+      <tr><td>blue</td><td><span class="dot" style="background:#5555FF"></span><code>#5555FF</code></td><td><span class="dot" style="background:#9999FF"></span><code>#9999FF</code></td><td></td></tr>
+      <tr><td>magenta</td><td><span class="dot" style="background:#FF55FF"></span><code>#FF55FF</code></td><td><span class="dot" style="background:#FF9AFF"></span><code>#FF9AFF</code></td><td>Windows Terminal names this slot "purple".</td></tr>
+      <tr><td>cyan</td><td><span class="dot" style="background:#00AAAA"></span><code>#00AAAA</code></td><td><span class="dot" style="background:#55FFFF"></span><code>#55FFFF</code></td><td></td></tr>
+      <tr><td>white</td><td><span class="dot" style="background:#FDCA9F"></span><code>#FDCA9F</code></td><td><span class="dot" style="background:#FFFCF7"></span><code>#FFFCF7</code></td><td>White means emphasis, so it stays in the phosphor: bright amber, then warm white.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="dim">Foreground <code>#FFB000</code>, background <code>#050300</code>, cursor <code>#FFB000</code>, selection <code>#9A5700</code>.</p>
+</section>
+
+<section>
+  <h2>The monitor</h2>
+  <p>A pixel shader draws the tube over whatever the terminal renders. Its knobs carry the names of eiDotter's effect tokens, with lower values.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Token</th><th class="num">Here</th><th class="num">eiDotter</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>scanline.intensity</code></td><td class="num">0.20</td><td class="num">0.6</td><td>How dark the gap between raster rows gets.</td></tr>
+      <tr><td><code>scanline.pitch</code></td><td class="num">3 px</td><td class="num">4 px</td><td>Distance between scanlines.</td></tr>
+      <tr><td><code>phosphor.glowRadius</code></td><td class="num">1.6 px</td><td class="num">40 px</td><td>Tight glow around lit pixels.</td></tr>
+      <tr><td><code>phosphor.glowIntensity</code></td><td class="num">0.35</td><td class="num">none</td><td>Strength of the tight glow.</td></tr>
+      <tr><td><code>phosphor.bloomRadius</code></td><td class="num">4.5 px</td><td class="num">80 px</td><td>Soft halation further out.</td></tr>
+      <tr><td><code>phosphor.bloomIntensity</code></td><td class="num">0.22</td><td class="num">0.5</td><td>Strength of the halation.</td></tr>
+      <tr><td><code>mask.intensity</code></td><td class="num">0.06</td><td class="num">none</td><td>Aperture grille: faint red, green and blue stripes one pixel wide.</td></tr>
+      <tr><td><code>vignette.intensity</code></td><td class="num">0.22</td><td class="num">1.0</td><td>How much dimmer the corners are.</td></tr>
+      <tr><td><code>vignette.spread</code></td><td class="num">0.20</td><td class="num">0.20</td><td>How far in the dimming reaches.</td></tr>
+      <tr><td><code>flicker.intensity</code></td><td class="num">0</td><td class="num">0.04</td><td>Off.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The radii differ in kind, not only in size. eiDotter's 40 and 80 pixels are an inset glow around the edge of a web page. Here the glow is sampled from the picture, so each glyph lights its own surroundings.</p>
+  <h3>Left out</h3>
+  <ul>
+    <li><b>Phosphor persistence.</b> The trail a tube leaves when text changes needs the previous frame, and a Windows Terminal shader only sees the current one.</li>
+    <li><b>Flicker.</b> Left out on purpose.</li>
+    <li><b>Curvature.</b> Bending the picture would move it away from where mouse clicks land.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Compared with eiDotter</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th></th><th>eiDotter (amber-mono, the default)</th><th>DOS-86</th></tr></thead>
+    <tbody>
+      <tr><td>Body text</td><td><code>#FFB000</code></td><td>Same value, taken from it.</td></tr>
+      <tr><td>Screen</td><td>Per theme</td><td><code>#050300</code>, the warm black of eiDotter's CGA-amber theme.</td></tr>
+      <tr><td>Error and success</td><td>Amber. The default theme keeps red and green out of functional roles; colour themes restore them.</td><td>Red and green. A terminal shows diffs all day, so the signals stay honest.</td></tr>
+      <tr><td>Secondary text</td><td><code>#B87C1A</code></td><td>Same value, placed in the bright-black slot.</td></tr>
+      <tr><td>Typeface</td><td>Perfect DOS VGA 437 for display, JetBrains Mono Nerd Font for body</td><td>JetBrains Mono Nerd Font only. A terminal has one face, and the body face is the readable one.</td></tr>
+      <tr><td>Glow</td><td>Text shadow on components, inset shadows at the page edge</td><td>Sampled per pixel from the rendered picture.</td></tr>
+      <tr><td>Scanlines</td><td>Drifting, 0.6</td><td>Still, 0.20.</td></tr>
+      <tr><td>Flicker</td><td>2 Hz, with a reduced-motion fallback</td><td>None.</td></tr>
+      <tr><td>Aperture grille</td><td>None</td><td>Faint, 0.06.</td></tr>
+      <tr><td>Persistence</td><td>A 200 ms token that nothing uses yet</td><td>Not possible in this shader.</td></tr>
+      <tr><td>Token file</td><td>Value and description per token</td><td>Same shape, plus the eiDotter token or value each one came from.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="two">
+    <div>
+      <h3>What could flow back</h3>
+      <ul>
+        <li>The aperture grille and per-pixel glow, as a canvas or WebGL layer for the web.</li>
+        <li>A "long reading" preset of the effect tokens at these lower values.</li>
+        <li>The role layer for terminals as an official eiDotter target.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What stays different</h3>
+      <ul>
+        <li>Honest red and green by default. On the web that remains a choice of theme.</li>
+        <li>No display typeface.</li>
+        <li>No motion of any kind.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Files</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>File</th><th>For</th></tr></thead>
+    <tbody>
+      <tr><td><code>tokens/dos-86.tokens.json</code></td><td>The source. Colours, roles, the sixteen slots, effect values.</td></tr>
+      <tr><td><code>build.mjs</code></td><td>Generates everything below. No dependencies.</td></tr>
+      <tr><td><code>dos-86.hlsl</code></td><td>The shader. Its constants are written by the build.</td></tr>
+      <tr><td><code>dist/windows-terminal.scheme.json</code></td><td>Windows Terminal colour scheme</td></tr>
+      <tr><td><code>dist/claude-code.theme.json</code></td><td>Claude Code custom theme</td></tr>
+      <tr><td><code>dist/ghostty.theme</code>, <code>kitty.conf</code>, <code>alacritty.toml</code></td><td>Other terminals. Generated, not yet tried in those terminals.</td></tr>
+      <tr><td><code>dist/dos-86.css</code></td><td>Every value as a CSS custom property</td></tr>
+      <tr><td><code>dist/contrast.json</code></td><td>The contrast figures on this page</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>Contrast figures are WCAG 2 ratios against <span class="mono">#050300</span>, computed by the build.</footer>
+
+</div>
+
+<script>
+  (function () {
+    var tube = document.getElementById('tube');
+    var toggle = document.getElementById('toggle');
+    toggle.addEventListener('click', function () {
+      var on = tube.classList.toggle('on');
+      toggle.setAttribute('aria-pressed', String(on));
+      toggle.textContent = on ? 'Monitor: on' : 'Monitor: off';
+    });
+  })();
+</script>

@@ -1,0 +1,32 @@
+# eiDotter DOS-86
+[colors.primary]
+background = "#050300"
+foreground = "#FFB000"
+
+[colors.cursor]
+cursor = "#FFB000"
+text = "#050300"
+
+[colors.selection]
+background = "#9A5700"
+text = "#050300"
+
+[colors.normal]
+black = "#050300"
+red = "#FF5555"
+green = "#00AA00"
+yellow = "#FFFF55"
+blue = "#5555FF"
+magenta = "#FF55FF"
+cyan = "#00AAAA"
+white = "#FDCA9F"
+
+[colors.bright]
+black = "#B87C1A"
+red = "#FF8888"
+green = "#55FF55"
+yellow = "#FFFF99"
+blue = "#9999FF"
+magenta = "#FF9AFF"
+cyan = "#55FFFF"
+white = "#FFFCF7"

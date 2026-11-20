@@ -1,0 +1,23 @@
+{
+  "name": "eiDotter DOS-86",
+  "background": "#050300",
+  "foreground": "#FFB000",
+  "cursorColor": "#FFB000",
+  "selectionBackground": "#9A5700",
+  "black": "#050300",
+  "red": "#FF5555",
+  "green": "#00AA00",
+  "yellow": "#FFFF55",
+  "blue": "#5555FF",
+  "purple": "#FF55FF",
+  "cyan": "#00AAAA",
+  "white": "#FDCA9F",
+  "brightBlack": "#B87C1A",
+  "brightRed": "#FF8888",
+  "brightGreen": "#55FF55",
+  "brightYellow": "#FFFF99",
+  "brightBlue": "#9999FF",
+  "brightPurple": "#FF9AFF",
+  "brightCyan": "#55FFFF",
+  "brightWhite": "#FFFCF7"
+}

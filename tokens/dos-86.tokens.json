@@ -1,0 +1,99 @@
+{
+  "$description": "eiDotter DOS-86, a terminal theme: single source of truth for the terminal theme. Same shape as eidotter's *.tokens.json (value + description). `node build.mjs` turns this into files for each target. `eidotter` on a token names the eidotter token it was taken from, or the eidotter value it departs from.",
+
+  "color": {
+    "phosphor": {
+      "$description": "The tube. One phosphor, at four brightness levels, on a warm black.",
+      "black":       { "$value": "#050300", "$description": "Screen. Warm near-black, about 3% amber: an unlit tube is not pure black.", "eidotter": "color.cga.black (cga-amber theme)" },
+      "tint":        { "$value": "#1A1000", "$description": "Faintly lit surface, for a block that should sit apart from the screen without a border.", "eidotter": "none (new)" },
+      "amberDim":    { "$value": "#9A5700", "$description": "Dim phosphor. Borders, selection, decoration. Too dark for running text (3.7:1).", "eidotter": "color.cga.amber-dim (amber-mono)" },
+      "amberSoft":   { "$value": "#B87C1A", "$description": "Secondary text. The dimmest amber that still passes AA on the screen colour.", "eidotter": "color.cga.light-gray (amber-mono), there called the warm tan-amber" },
+      "amber":       { "$value": "#FFB000", "$description": "Body text. P3 phosphor amber, 602nm.", "eidotter": "color.cga.amber (amber-mono)" },
+      "amberBright": { "$value": "#FDCA9F", "$description": "Emphasis. The same phosphor driven harder.", "eidotter": "color.cga.amber-bright (amber-mono)" },
+      "white":       { "$value": "#FFFCF7", "$description": "Strongest emphasis. Warm off-white, about 2% amber.", "eidotter": "color.cga.white (cga-amber theme)" }
+    },
+    "signal": {
+      "$description": "Colours that carry meaning. Taken from the CGA 16-colour palette and never tinted amber, so a diff, a warning and an error read at a glance.",
+      "red":           { "$value": "#FF5555", "$description": "Error, removed. CGA bright red in the normal slot: CGA red #AA0000 is 2.6:1 on the screen colour.", "eidotter": "color.cga.brightRed" },
+      "redBright":     { "$value": "#FF8888", "$description": "Lighter step above red; not a CGA colour.", "eidotter": "none (new)" },
+      "green":         { "$value": "#00AA00", "$description": "Success, added. CGA green.", "eidotter": "color.cga.green" },
+      "greenBright":   { "$value": "#55FF55", "$description": "CGA bright green.", "eidotter": "color.cga.brightGreen" },
+      "yellow":        { "$value": "#FFFF55", "$description": "Warning. CGA yellow; lemon enough to stand apart from amber text.", "eidotter": "color.cga.yellow" },
+      "yellowBright":  { "$value": "#FFFF99", "$description": "Lighter step above yellow; not a CGA colour.", "eidotter": "none (new)" },
+      "blue":          { "$value": "#5555FF", "$description": "Prompts, links. CGA bright blue in the normal slot: CGA blue #0000AA is unreadable on black.", "eidotter": "color.cga.brightBlue" },
+      "blueBright":    { "$value": "#9999FF", "$description": "Lighter step above blue; not a CGA colour. Used where blue must be read as text.", "eidotter": "none (new)" },
+      "magenta":       { "$value": "#FF55FF", "$description": "Accent. CGA bright magenta.", "eidotter": "color.cga.brightMagenta" },
+      "magentaBright": { "$value": "#FF9AFF", "$description": "Lighter step above magenta; not a CGA colour.", "eidotter": "none (new)" },
+      "cyan":          { "$value": "#00AAAA", "$description": "Info, plan. CGA cyan.", "eidotter": "color.cga.cyan" },
+      "cyanBright":    { "$value": "#55FFFF", "$description": "CGA bright cyan.", "eidotter": "color.cga.brightCyan" }
+    },
+    "surface": {
+      "$description": "Dark fills behind text that carries a signal.",
+      "added":   { "$value": "#122010", "$description": "Behind an added line.", "eidotter": "color.semantic.alert.success (cga-amber theme)" },
+      "removed": { "$value": "#430500", "$description": "Behind a removed line.", "eidotter": "color.semantic.alert.error (cga-amber theme)" }
+    }
+  },
+
+  "role": {
+    "$description": "What each colour is for. Targets map from roles, never from raw colours.",
+    "screen":      { "$value": "{color.phosphor.black}" },
+    "text":        { "$value": "{color.phosphor.amber}" },
+    "textDim":     { "$value": "{color.phosphor.amberSoft}" },
+    "textStrong":  { "$value": "{color.phosphor.amberBright}" },
+    "decoration":  { "$value": "{color.phosphor.amberDim}" },
+    "cursor":      { "$value": "{color.phosphor.amber}" },
+    "selection":   { "$value": "{color.phosphor.amberDim}" },
+    "raised":      { "$value": "{color.phosphor.tint}" },
+    "error":       { "$value": "{color.signal.red}" },
+    "success":     { "$value": "{color.signal.greenBright}" },
+    "warning":     { "$value": "{color.signal.yellow}" },
+    "prompt":      { "$value": "{color.signal.blueBright}" },
+    "info":        { "$value": "{color.signal.cyan}" },
+    "addedFill":   { "$value": "{color.surface.added}" },
+    "removedFill": { "$value": "{color.surface.removed}" }
+  },
+
+  "ansi": {
+    "$description": "The 16 terminal slots. Slot names follow the ANSI standard; Windows Terminal calls magenta 'purple'.",
+    "black":         { "$value": "{color.phosphor.black}" },
+    "red":           { "$value": "{color.signal.red}" },
+    "green":         { "$value": "{color.signal.green}" },
+    "yellow":        { "$value": "{color.signal.yellow}" },
+    "blue":          { "$value": "{color.signal.blue}" },
+    "magenta":       { "$value": "{color.signal.magenta}" },
+    "cyan":          { "$value": "{color.signal.cyan}" },
+    "white":         { "$value": "{color.phosphor.amberBright}", "$description": "The 'white' slot is emphasis, so it stays in the phosphor." },
+    "brightBlack":   { "$value": "{color.phosphor.amberSoft}", "$description": "Programs print secondary text in this slot, so it must be readable." },
+    "brightRed":     { "$value": "{color.signal.redBright}" },
+    "brightGreen":   { "$value": "{color.signal.greenBright}" },
+    "brightYellow":  { "$value": "{color.signal.yellowBright}" },
+    "brightBlue":    { "$value": "{color.signal.blueBright}" },
+    "brightMagenta": { "$value": "{color.signal.magentaBright}" },
+    "brightCyan":    { "$value": "{color.signal.cyanBright}" },
+    "brightWhite":   { "$value": "{color.phosphor.white}" }
+  },
+
+  "effect": {
+    "$description": "The monitor. Names follow eidotter's effect tokens (src/tokens/effects-params.tokens.json). `eidotter` is that file's value: eidotter tunes for a web page seen for seconds, this theme for text read for hours.",
+    "scanline": {
+      "intensity": { "$value": 0.20, "$description": "How dark the gap between raster rows gets (0 to 1).", "eidotter": 0.6, "hlsl": "SCANLINE_INTENSITY" },
+      "pitch":     { "$value": 3.0,  "$description": "Distance between scanlines in px at 100% display scale.", "eidotter": 4, "hlsl": "SCANLINE_PITCH" }
+    },
+    "phosphor": {
+      "glowRadius":     { "$value": 1.6,  "$description": "Tight glow around lit pixels, in px. Sampled per pixel from the picture.", "eidotter": "40px, as an inset box-shadow on the page edge", "hlsl": "GLOW_RADIUS" },
+      "glowIntensity":  { "$value": 0.35, "$description": "Strength of the tight glow (0 to 1).", "eidotter": "none (new)", "hlsl": "GLOW_INTENSITY" },
+      "bloomRadius":    { "$value": 4.5,  "$description": "Soft halation further out, in px.", "eidotter": "80px, as an inset box-shadow on the page edge", "hlsl": "BLOOM_RADIUS" },
+      "bloomIntensity": { "$value": 0.22, "$description": "Strength of the halation (0 to 1).", "eidotter": 0.5, "hlsl": "BLOOM_INTENSITY" }
+    },
+    "mask": {
+      "intensity": { "$value": 0.06, "$description": "Aperture grille: faint vertical red, green and blue stripes, one device pixel each. 0 turns it off.", "eidotter": "none (new)", "hlsl": "MASK_INTENSITY" }
+    },
+    "vignette": {
+      "intensity": { "$value": 0.22, "$description": "How much dimmer the corners are (0 to 1).", "eidotter": 1.0, "hlsl": "VIGNETTE_INTENSITY" },
+      "spread":    { "$value": 0.20, "$description": "How far in from the corners the dimming reaches, as a fraction of the screen.", "eidotter": 0.20, "hlsl": "VIGNETTE_SPREAD" }
+    },
+    "flicker": {
+      "intensity": { "$value": 0, "$description": "Off. Nobody should read through flicker for a working day.", "eidotter": 0.04 }
+    }
+  }
+}
