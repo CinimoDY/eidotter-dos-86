@@ -1,0 +1,20 @@
+{
+  "name": "eiDotter DOS-86",
+  "base": "dark",
+  "overrides": {
+    "claude": "#FFB000",
+    "text": "#FFB000",
+    "inactive": "#B87C1A",
+    "subtle": "#9A5700",
+    "promptBorder": "#9A5700",
+    "permission": "#9999FF",
+    "planMode": "#00AAAA",
+    "success": "#55FF55",
+    "error": "#FF5555",
+    "warning": "#FFFF55",
+    "diffAdded": "#122010",
+    "diffRemoved": "#430500",
+    "userMessageBackground": "#1A1000",
+    "rate_limit_fill": "#FFB000"
+  }
+}

@@ -238,6 +238,9 @@ out['contrast.json'] = JSON.stringify(
 ) + '\n';
 
 mkdirSync(join(root, 'dist'), { recursive: true });
+// The Claude Code plugin reads themes/ at the repo root.
+mkdirSync(join(root, 'themes'), { recursive: true });
+writeFileSync(join(root, 'themes', 'eidotter-dos-86.json'), out['claude-code.theme.json']);
 for (const [file, content] of Object.entries(out)) writeFileSync(join(root, 'dist', file), content);
 
 // Shader constants: replace the value in each `const float NAME = ...;` line of both shaders.

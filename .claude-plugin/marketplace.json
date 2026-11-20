@@ -1,0 +1,11 @@
+{
+  "name": "eidotter",
+  "owner": { "name": "Dominic Kennedy" },
+  "plugins": [
+    {
+      "name": "eidotter-dos-86",
+      "source": "./",
+      "description": "eiDotter DOS-86 colour theme for Claude Code"
+    }
+  ]
+}
