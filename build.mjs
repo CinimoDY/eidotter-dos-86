@@ -100,6 +100,7 @@ out['ghostty.theme'] = [
   `background = ${role.screen}`,
   `foreground = ${role.text}`,
   `cursor-color = ${role.cursor}`,
+  `cursor-text = ${role.screen}`,
   `selection-background = ${role.selection}`,
   `selection-foreground = ${role.screen}`,
   '',
@@ -209,6 +210,36 @@ out['powershell-profile.ps1'] = [
   '',
 ].join('\n');
 
+// Omarchy: one colors.toml; Omarchy generates its per-app configs from it.
+// Written to the repo root as well, so this repo can be installed as an Omarchy theme.
+const omarchy = [
+  `# ${NAME}`,
+  `accent = "${role.text}"`,
+  `cursor = "${role.cursor}"`,
+  `foreground = "${role.text}"`,
+  `background = "${role.screen}"`,
+  `selection_foreground = "${role.screen}"`,
+  `selection_background = "${role.selection}"`,
+  ...ANSI_ORDER.map((slot, i) => `color${i} = "${ansi[slot]}"`),
+  '',
+].join('\n');
+out['omarchy.colors.toml'] = omarchy;
+
+// Foot: hex without the leading #.
+const bare = (hex) => hex.slice(1);
+out['foot.ini'] = [
+  `# ${NAME}`,
+  '[colors-dark]',
+  `foreground=${bare(role.text)}`,
+  `background=${bare(role.screen)}`,
+  `selection-foreground=${bare(role.screen)}`,
+  `selection-background=${bare(role.selection)}`,
+  `cursor=${bare(role.screen)} ${bare(role.cursor)}`,
+  ...ANSI_ORDER.slice(0, 8).map((slot, i) => `regular${i}=${bare(ansi[slot])}`),
+  ...ANSI_ORDER.slice(8).map((slot, i) => `bright${i}=${bare(ansi[slot])}`),
+  '',
+].join('\n');
+
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
 const cssVars = [];
 for (const family of ['phosphor', 'signal', 'surface']) {
@@ -241,6 +272,7 @@ mkdirSync(join(root, 'dist'), { recursive: true });
 // The Claude Code plugin reads themes/ at the repo root.
 mkdirSync(join(root, 'themes'), { recursive: true });
 writeFileSync(join(root, 'themes', 'eidotter-dos-86.json'), out['claude-code.theme.json']);
+writeFileSync(join(root, 'colors.toml'), omarchy);
 for (const [file, content] of Object.entries(out)) writeFileSync(join(root, 'dist', file), content);
 
 // Shader constants: replace the value in each `const float NAME = ...;` line of both shaders.
