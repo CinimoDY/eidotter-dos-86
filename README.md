@@ -56,5 +56,8 @@ To add an application, add one block to `build.mjs` that maps from `role` and `a
 
 ## Open
 
-- No licence yet. eiDotter itself is CC BY-NC 4.0.
 - A bitmap font option.
+
+## Licence
+
+MIT. See `LICENSE`. eiDotter itself is licensed separately (CC BY-NC 4.0).
