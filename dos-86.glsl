@@ -21,6 +21,9 @@ const float MASK_INTENSITY     = 0.06;
 const float VIGNETTE_INTENSITY = 0.22;
 const float VIGNETTE_SPREAD    = 0.2;
 
+// effect.ghostty.pixelScale: device pixels per point (2 on Retina).
+const float PIXEL_SCALE        = 2.0;
+
 const float TWO_PI = 6.2831853;
 
 vec3 ring(vec2 uv, vec2 texel, float radius)
@@ -42,17 +45,17 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     vec4 base = texture(iChannel0, uv);
 
     // Phosphor glow and halation: lit pixels bleed light into their neighbours.
-    vec3 glow  = ring(uv, texel, GLOW_RADIUS);
-    vec3 bloom = ring(uv, texel, BLOOM_RADIUS);
+    vec3 glow  = ring(uv, texel, GLOW_RADIUS * PIXEL_SCALE);
+    vec3 bloom = ring(uv, texel, BLOOM_RADIUS * PIXEL_SCALE);
     vec3 color = base.rgb + glow * GLOW_INTENSITY + bloom * BLOOM_INTENSITY;
 
     // Scanlines: darken between raster rows.
-    float row = fract(fragCoord.y / SCANLINE_PITCH);
+    float row = fract(fragCoord.y / (SCANLINE_PITCH * PIXEL_SCALE));
     float dark = 0.5 - 0.5 * cos(TWO_PI * row);
     color *= 1.0 - SCANLINE_INTENSITY * dark;
 
     // Aperture grille.
-    float stripe = mod(floor(fragCoord.x), 3.0);
+    float stripe = mod(floor(fragCoord.x / PIXEL_SCALE), 3.0);
     vec3 mask = vec3(1.0);
     if (stripe < 0.5)       { mask = vec3(1.0, 1.0 - MASK_INTENSITY, 1.0 - MASK_INTENSITY); }
     else if (stripe < 1.5)  { mask = vec3(1.0 - MASK_INTENSITY, 1.0, 1.0 - MASK_INTENSITY); }

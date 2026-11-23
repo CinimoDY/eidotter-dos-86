@@ -24,6 +24,8 @@ Part of the eiDotter design system's family. Design notes with the reasoning, th
 
 A shader that fails to compile is ignored by both terminals; Ghostty reports it only in its log.
 
+Ghostty runs its shader in device pixels, so `dos-86.glsl` scales its effects by `PIXEL_SCALE` (2, for Retina). On a non-Retina screen set `effect.ghostty.pixelScale` to 1 in the tokens and rebuild.
+
 ## Change a value
 
 Edit `tokens/dos-86.tokens.json`, then run:

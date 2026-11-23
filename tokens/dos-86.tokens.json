@@ -92,6 +92,9 @@
       "intensity": { "$value": 0.22, "$description": "How much dimmer the corners are (0 to 1).", "eidotter": 1.0, "hlsl": "VIGNETTE_INTENSITY" },
       "spread":    { "$value": 0.20, "$description": "How far in from the corners the dimming reaches, as a fraction of the screen.", "eidotter": 0.20, "hlsl": "VIGNETTE_SPREAD" }
     },
+    "ghostty": {
+      "pixelScale": { "$value": 2, "$description": "Ghostty measures in device pixels, so on a 2x (Retina) display every size above comes out half as big. This multiplies scanline pitch, glow and bloom radius and the grille stripe width to match a 100% display. Set 1 on a non-Retina screen.", "eidotter": "none (new)", "hlsl": "PIXEL_SCALE", "shaders": ["glsl"] }
+    },
     "flicker": {
       "intensity": { "$value": 0, "$description": "Off. Nobody should read through flicker for a working day.", "eidotter": 0.04 }
     }
