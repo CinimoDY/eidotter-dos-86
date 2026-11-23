@@ -5,6 +5,7 @@
     "terminalCursor.foreground": "#FFB000",
     "terminalCursor.background": "#050300",
     "terminal.selectionBackground": "#9A5700",
+    "terminal.selectionForeground": "#050300",
     "terminal.ansiBlack": "#050300",
     "terminal.ansiRed": "#FF5555",
     "terminal.ansiGreen": "#00AA00",

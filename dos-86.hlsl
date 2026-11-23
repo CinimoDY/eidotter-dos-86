@@ -17,14 +17,14 @@ cbuffer PixelShaderSettings
 };
 
 // effect.scanline.*
-static const float SCANLINE_INTENSITY = 0.2;  // token default 0.6
+static const float SCANLINE_INTENSITY = 0.1;  // token default 0.6
 static const float SCANLINE_PITCH     = 3.0;   // px at 100% scale; token default 4px
 
 // effect.phosphor.*
 static const float GLOW_RADIUS        = 1.6;   // px, tight glow around lit pixels
 static const float BLOOM_RADIUS       = 4.5;   // px, soft halation
-static const float GLOW_INTENSITY     = 0.35;
-static const float BLOOM_INTENSITY    = 0.22;  // token default 0.5
+static const float GLOW_INTENSITY     = 0.2;
+static const float BLOOM_INTENSITY    = 0.12;  // token default 0.5
 
 // Aperture grille: faint vertical RGB stripes. 0 turns it off.
 static const float MASK_INTENSITY     = 0.06;
