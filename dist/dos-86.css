@@ -36,12 +36,12 @@
   --dos86-role-info: #00AAAA;
   --dos86-role-added-fill: #122010;
   --dos86-role-removed-fill: #430500;
-  --dos86-effect-scanline-intensity: 0.2;
+  --dos86-effect-scanline-intensity: 0.1;
   --dos86-effect-scanline-pitch: 3;
   --dos86-effect-phosphor-glow-radius: 1.6;
-  --dos86-effect-phosphor-glow-intensity: 0.35;
+  --dos86-effect-phosphor-glow-intensity: 0.2;
   --dos86-effect-phosphor-bloom-radius: 4.5;
-  --dos86-effect-phosphor-bloom-intensity: 0.22;
+  --dos86-effect-phosphor-bloom-intensity: 0.12;
   --dos86-effect-mask-intensity: 0.06;
   --dos86-effect-vignette-intensity: 0.22;
   --dos86-effect-vignette-spread: 0.2;

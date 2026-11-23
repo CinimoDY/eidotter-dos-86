@@ -89,6 +89,8 @@ out['claude-code.theme.json'] = JSON.stringify(
       diffAdded: role.addedFill,
       diffRemoved: role.removedFill,
       userMessageBackground: role.raised,
+      // Text drawn on an amber fill (badges, highlights) takes the screen colour.
+      inverseText: role.screen,
       rate_limit_fill: role.text,
       // Session and subagent colours (the names /color offers).
       red_FOR_SUBAGENTS_ONLY: signal.red,
@@ -194,6 +196,7 @@ out['vscode-terminal.settings.json'] = JSON.stringify(
       'terminalCursor.foreground': role.cursor,
       'terminalCursor.background': role.screen,
       'terminal.selectionBackground': role.selection,
+      'terminal.selectionForeground': role.screen,
       ...Object.fromEntries(ANSI_ORDER.map((slot) => [`terminal.ansi${cap(slot)}`, ansi[slot]])),
     },
   },

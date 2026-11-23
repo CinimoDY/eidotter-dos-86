@@ -5,14 +5,14 @@
 // tokens/dos-86.tokens.json; edit the tokens, not the numbers here.
 
 // effect.scanline.*
-const float SCANLINE_INTENSITY = 0.2;
+const float SCANLINE_INTENSITY = 0.1;
 const float SCANLINE_PITCH     = 3.0;
 
 // effect.phosphor.*
 const float GLOW_RADIUS        = 1.6;
 const float BLOOM_RADIUS       = 4.5;
-const float GLOW_INTENSITY     = 0.35;
-const float BLOOM_INTENSITY    = 0.22;
+const float GLOW_INTENSITY     = 0.2;
+const float BLOOM_INTENSITY    = 0.12;
 
 // Aperture grille: faint vertical RGB stripes. 0 turns it off.
 const float MASK_INTENSITY     = 0.06;

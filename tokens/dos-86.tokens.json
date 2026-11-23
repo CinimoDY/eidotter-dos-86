@@ -76,14 +76,14 @@
   "effect": {
     "$description": "The monitor. Names follow eidotter's effect tokens (src/tokens/effects-params.tokens.json). `eidotter` is that file's value: eidotter tunes for a web page seen for seconds, this theme for text read for hours.",
     "scanline": {
-      "intensity": { "$value": 0.20, "$description": "How dark the gap between raster rows gets (0 to 1).", "eidotter": 0.6, "hlsl": "SCANLINE_INTENSITY" },
+      "intensity": { "$value": 0.10, "$description": "How dark the gap between raster rows gets (0 to 1). Kept low: stronger lines cut through glyphs and tire the eye.", "eidotter": 0.6, "hlsl": "SCANLINE_INTENSITY" },
       "pitch":     { "$value": 3.0,  "$description": "Distance between scanlines in px at 100% display scale.", "eidotter": 4, "hlsl": "SCANLINE_PITCH" }
     },
     "phosphor": {
       "glowRadius":     { "$value": 1.6,  "$description": "Tight glow around lit pixels, in px. Sampled per pixel from the picture.", "eidotter": "40px, as an inset box-shadow on the page edge", "hlsl": "GLOW_RADIUS" },
-      "glowIntensity":  { "$value": 0.35, "$description": "Strength of the tight glow (0 to 1).", "eidotter": "none (new)", "hlsl": "GLOW_INTENSITY" },
+      "glowIntensity":  { "$value": 0.20, "$description": "Strength of the tight glow (0 to 1).", "eidotter": "none (new)", "hlsl": "GLOW_INTENSITY" },
       "bloomRadius":    { "$value": 4.5,  "$description": "Soft halation further out, in px.", "eidotter": "80px, as an inset box-shadow on the page edge", "hlsl": "BLOOM_RADIUS" },
-      "bloomIntensity": { "$value": 0.22, "$description": "Strength of the halation (0 to 1).", "eidotter": 0.5, "hlsl": "BLOOM_INTENSITY" }
+      "bloomIntensity": { "$value": 0.12, "$description": "Strength of the halation (0 to 1).", "eidotter": 0.5, "hlsl": "BLOOM_INTENSITY" }
     },
     "mask": {
       "intensity": { "$value": 0.06, "$description": "Aperture grille: faint vertical red, green and blue stripes, one device pixel each. 0 turns it off.", "eidotter": "none (new)", "hlsl": "MASK_INTENSITY" }
