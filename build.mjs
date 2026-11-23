@@ -263,7 +263,7 @@ for (const [family, node] of Object.entries(tokens.effect)) {
   if (family.startsWith('$')) continue;
   for (const [key, t] of Object.entries(node)) {
     cssVars.push(`  --dos86-effect-${kebab(family)}-${kebab(key)}: ${t.$value};`);
-    if (t.hlsl) hlsl.push([t.hlsl, t.$value]);
+    if (t.hlsl) hlsl.push([t.hlsl, t.$value, t.shaders]);
   }
 }
 out['dos-86.css'] = `/* ${NAME}: generated from tokens/dos-86.tokens.json */\n:root {\n${cssVars.join('\n')}\n}\n`;
@@ -286,11 +286,14 @@ writeFileSync(join(root, 'colors.toml'), omarchy);
 for (const [file, content] of Object.entries(out)) writeFileSync(join(root, 'dist', file), content);
 
 // Shader constants: replace the value in each `const float NAME = ...;` line of both shaders.
+// A token with `shaders: ["glsl"]` goes only into the shaders with those extensions.
 const shaders = ['dos-86.hlsl', 'dos-86.glsl'];
 for (const file of shaders) {
   const shaderPath = join(root, file);
   let shader = readFileSync(shaderPath, 'utf8');
-  for (const [constant, value] of hlsl) {
+  const ext = file.split('.').pop();
+  for (const [constant, value, only] of hlsl) {
+    if (only && !only.includes(ext)) continue;
     const literal = Number.isInteger(value) ? value.toFixed(1) : String(value);
     const pattern = new RegExp(`(const float ${constant}\\s*=\\s*)[0-9.]+(;)`);
     if (!pattern.test(shader)) throw new Error(`Constant ${constant} not found in ${file}`);

@@ -45,5 +45,6 @@
   --dos86-effect-mask-intensity: 0.06;
   --dos86-effect-vignette-intensity: 0.22;
   --dos86-effect-vignette-spread: 0.2;
+  --dos86-effect-ghostty-pixel-scale: 2;
   --dos86-effect-flicker-intensity: 0;
 }
