@@ -12,7 +12,7 @@ Part of the eiDotter design system's family. Design notes with the reasoning, th
 | Windows Terminal | Paste `dist/windows-terminal.scheme.json` into `schemes` in `settings.json`; on a profile set `"colorScheme": "eiDotter DOS-86"` and `"experimental.pixelShaderPath"` to the full path of `dos-86.hlsl` | yes | yes |
 | PowerShell | The Windows Terminal scheme covers the colours. For matching syntax colours while typing, dot-source `dist/powershell-profile.ps1` from `$PROFILE` | from the terminal | no |
 | iTerm2 | Settings → Profiles → Colors → Color Presets → Import `dist/iterm2.itermcolors` | no (iTerm2 has no custom shaders) | no |
-| Ghostty | Copy `dist/ghostty.theme` to `~/.config/ghostty/themes/eidotter-dos-86`; in the config set `theme = eidotter-dos-86` and `custom-shader = /full/path/to/dos-86.glsl` | yes | no |
+| Ghostty | Copy `dist/ghostty.theme` to `~/.config/ghostty/themes/eidotter-dos-86`; in the config set `theme = eidotter-dos-86` and `custom-shader = /full/path/to/dos-86.glsl` | yes | yes |
 | Omarchy | Menu: Install → Style → Theme, paste this repo's URL. Omarchy reads `colors.toml` from the repo root and themes its terminal and desktop from it | no | no |
 | Foot | Include `dist/foot.ini` from `foot.ini` | no | no |
 | kitty | `include` `dist/kitty.conf` | no | no |
