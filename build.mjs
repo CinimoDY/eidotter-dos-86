@@ -188,21 +188,363 @@ out['iterm2.itermcolors'] = [
 
 // VS Code and its forks (Cursor, Antigravity): integrated-terminal colours as a settings snippet.
 const cap = (slot) => slot[0].toUpperCase() + slot.slice(1);
+// Shared with the full theme below.
+const vscodeTerminalColors = {
+  'terminal.background': role.screen,
+  'terminal.foreground': role.text,
+  'terminalCursor.foreground': role.cursor,
+  'terminalCursor.background': role.screen,
+  'terminal.selectionBackground': role.selection,
+  'terminal.selectionForeground': role.screen,
+  ...Object.fromEntries(ANSI_ORDER.map((slot) => [`terminal.ansi${cap(slot)}`, ansi[slot]])),
+};
 out['vscode-terminal.settings.json'] = JSON.stringify(
+  { 'workbench.colorCustomizations': vscodeTerminalColors },
+  null,
+  2
+) + '\n';
+
+// VS Code and its forks (Antigravity, Cursor): a full colour-theme extension, written to vscode/.
+// Surfaces and text stay in the phosphor; signal colours appear only where they carry meaning.
+const alpha = (hex, a) => hex + a;
+const vscodeColors = {
+  // Base
+  foreground: role.text,
+  descriptionForeground: role.textDim,
+  disabledForeground: role.decoration,
+  errorForeground: role.error,
+  focusBorder: role.decoration,
+  'icon.foreground': role.text,
+  'widget.shadow': '#00000000',
+  'selection.background': role.selection,
+  'textLink.foreground': role.prompt,
+  'textLink.activeForeground': signal.cyanBright,
+  'textPreformat.foreground': role.textStrong,
+  'textBlockQuote.background': role.raised,
+  'textBlockQuote.border': role.decoration,
+  'textCodeBlock.background': role.raised,
+  'textSeparator.foreground': role.decoration,
+
+  // Window chrome
+  'titleBar.activeBackground': role.screen,
+  'titleBar.activeForeground': role.text,
+  'titleBar.inactiveBackground': role.screen,
+  'titleBar.inactiveForeground': role.textDim,
+  'titleBar.border': role.decoration,
+  'activityBar.background': role.screen,
+  'activityBar.foreground': role.text,
+  'activityBar.inactiveForeground': role.textDim,
+  'activityBar.border': role.decoration,
+  'activityBar.activeBorder': role.text,
+  'activityBarBadge.background': role.text,
+  'activityBarBadge.foreground': role.screen,
+  'sideBar.background': role.screen,
+  'sideBar.foreground': role.text,
+  'sideBar.border': role.decoration,
+  'sideBarTitle.foreground': role.textStrong,
+  'sideBarSectionHeader.background': role.raised,
+  'sideBarSectionHeader.foreground': role.text,
+  'sideBarSectionHeader.border': role.decoration,
+  'statusBar.background': role.screen,
+  'statusBar.foreground': role.text,
+  'statusBar.border': role.decoration,
+  'statusBar.noFolderBackground': role.screen,
+  'statusBar.debuggingBackground': role.text,
+  'statusBar.debuggingForeground': role.screen,
+  'statusBarItem.hoverBackground': role.raised,
+  'statusBarItem.remoteBackground': role.text,
+  'statusBarItem.remoteForeground': role.screen,
+  'statusBarItem.errorBackground': role.removedFill,
+  'statusBarItem.errorForeground': role.error,
+  'statusBarItem.warningBackground': role.raised,
+  'statusBarItem.warningForeground': role.warning,
+  'panel.background': role.screen,
+  'panel.border': role.decoration,
+  'panelTitle.activeForeground': role.textStrong,
+  'panelTitle.activeBorder': role.text,
+  'panelTitle.inactiveForeground': role.textDim,
+
+  // Tabs
+  'editorGroupHeader.tabsBackground': role.screen,
+  'editorGroupHeader.tabsBorder': role.decoration,
+  'editorGroup.border': role.decoration,
+  'tab.activeBackground': role.raised,
+  'tab.activeForeground': role.textStrong,
+  'tab.activeBorderTop': role.text,
+  'tab.inactiveBackground': role.screen,
+  'tab.inactiveForeground': role.textDim,
+  'tab.border': role.decoration,
+  'tab.hoverBackground': role.raised,
+  'breadcrumb.foreground': role.textDim,
+  'breadcrumb.focusForeground': role.text,
+  'breadcrumb.activeSelectionForeground': role.textStrong,
+
+  // Editor
+  'editor.background': role.screen,
+  'editor.foreground': role.text,
+  'editorLineNumber.foreground': role.textDim,
+  'editorLineNumber.activeForeground': role.textStrong,
+  'editorCursor.foreground': role.cursor,
+  'editorCursor.background': role.screen,
+  'editor.lineHighlightBackground': role.raised,
+  'editor.lineHighlightBorder': '#00000000',
+  // VS Code keeps syntax colours on selected text, so the selection is a translucent
+  // dim amber (amber text stays 7.7:1 on it) rather than the terminals' solid fill.
+  'editor.selectionBackground': alpha(role.selection, '66'),
+  'editor.inactiveSelectionBackground': alpha(role.selection, '44'),
+  'editor.selectionHighlightBackground': alpha(role.selection, '33'),
+  'editor.wordHighlightBackground': alpha(role.selection, '33'),
+  'editor.wordHighlightStrongBackground': alpha(role.selection, '55'),
+  'editor.findMatchBackground': alpha(role.warning, '55'),
+  'editor.findMatchBorder': role.warning,
+  'editor.findMatchHighlightBackground': alpha(role.selection, '66'),
+  'editor.rangeHighlightBackground': alpha(role.raised, 'CC'),
+  'editorWhitespace.foreground': alpha(role.decoration, '88'),
+  'editorIndentGuide.background1': alpha(role.decoration, '55'),
+  'editorIndentGuide.activeBackground1': role.decoration,
+  'editorRuler.foreground': alpha(role.decoration, '88'),
+  'editorBracketMatch.background': alpha(role.selection, '55'),
+  'editorBracketMatch.border': role.decoration,
+  'editorLink.activeForeground': role.prompt,
+  'editorCodeLens.foreground': role.textDim,
+  'editorInlayHint.background': role.raised,
+  'editorInlayHint.foreground': role.textDim,
+  'editorGhostText.foreground': role.decoration,
+  'editorError.foreground': role.error,
+  'editorWarning.foreground': role.warning,
+  'editorInfo.foreground': role.info,
+  'editorHint.foreground': role.info,
+  'editorGutter.addedBackground': role.success,
+  'editorGutter.deletedBackground': role.error,
+  'editorGutter.modifiedBackground': role.info,
+  'editorOverviewRuler.border': role.decoration,
+  'editorOverviewRuler.errorForeground': role.error,
+  'editorOverviewRuler.warningForeground': role.warning,
+  'editorOverviewRuler.infoForeground': role.info,
+  'editorOverviewRuler.addedForeground': role.success,
+  'editorOverviewRuler.deletedForeground': role.error,
+  'editorOverviewRuler.modifiedForeground': role.info,
+  'minimap.errorHighlight': role.error,
+  'minimap.warningHighlight': role.warning,
+  'minimap.selectionHighlight': role.selection,
+  'minimapGutter.addedBackground': role.success,
+  'minimapGutter.deletedBackground': role.error,
+  'minimapGutter.modifiedBackground': role.info,
+
+  // Widgets: hover, suggest, find, peek
+  'editorWidget.background': role.raised,
+  'editorWidget.foreground': role.text,
+  'editorWidget.border': role.decoration,
+  'editorHoverWidget.background': role.raised,
+  'editorHoverWidget.border': role.decoration,
+  'editorSuggestWidget.background': role.raised,
+  'editorSuggestWidget.border': role.decoration,
+  'editorSuggestWidget.foreground': role.text,
+  'editorSuggestWidget.highlightForeground': role.textStrong,
+  'editorSuggestWidget.selectedBackground': role.text,
+  'editorSuggestWidget.selectedForeground': role.screen,
+  'peekView.border': role.decoration,
+  'peekViewEditor.background': role.raised,
+  'peekViewResult.background': role.screen,
+  'peekViewTitle.background': role.raised,
+  'peekViewTitleLabel.foreground': role.textStrong,
+  'peekViewTitleDescription.foreground': role.textDim,
+  'peekViewEditor.matchHighlightBackground': alpha(role.warning, '44'),
+  'peekViewResult.matchHighlightBackground': alpha(role.warning, '44'),
+
+  // Lists and trees. A focused row is a full amber bar with screen-coloured text (11:1).
+  'list.activeSelectionBackground': role.text,
+  'list.activeSelectionForeground': role.screen,
+  'list.activeSelectionIconForeground': role.screen,
+  'list.inactiveSelectionBackground': role.raised,
+  'list.inactiveSelectionForeground': role.textStrong,
+  'list.hoverBackground': role.raised,
+  'list.hoverForeground': role.textStrong,
+  'list.focusOutline': role.decoration,
+  'list.highlightForeground': role.textStrong,
+  'list.errorForeground': role.error,
+  'list.warningForeground': role.warning,
+  'tree.indentGuidesStroke': role.decoration,
+
+  // Inputs and buttons
+  'input.background': role.raised,
+  'input.foreground': role.text,
+  'input.border': role.decoration,
+  'input.placeholderForeground': role.textDim,
+  'inputOption.activeBorder': role.text,
+  'inputOption.activeBackground': alpha(role.selection, '66'),
+  'inputValidation.errorBackground': role.removedFill,
+  'inputValidation.errorBorder': role.error,
+  'inputValidation.warningBackground': role.raised,
+  'inputValidation.warningBorder': role.warning,
+  'inputValidation.infoBackground': role.raised,
+  'inputValidation.infoBorder': role.info,
+  'dropdown.background': role.raised,
+  'dropdown.foreground': role.text,
+  'dropdown.border': role.decoration,
+  'checkbox.background': role.raised,
+  'checkbox.border': role.decoration,
+  'button.background': role.text,
+  'button.foreground': role.screen,
+  'button.hoverBackground': role.textStrong,
+  'button.secondaryBackground': role.raised,
+  'button.secondaryForeground': role.text,
+  'button.secondaryHoverBackground': alpha(role.selection, '66'),
+  'badge.background': role.text,
+  'badge.foreground': role.screen,
+  'progressBar.background': role.text,
+  'scrollbar.shadow': '#00000000',
+  'scrollbarSlider.background': alpha(role.decoration, '55'),
+  'scrollbarSlider.hoverBackground': alpha(role.decoration, '88'),
+  'scrollbarSlider.activeBackground': role.decoration,
+
+  // Quick input, menus, notifications
+  'quickInput.background': role.raised,
+  'quickInput.foreground': role.text,
+  'quickInputList.focusBackground': role.text,
+  'quickInputList.focusForeground': role.screen,
+  'pickerGroup.foreground': role.textStrong,
+  'pickerGroup.border': role.decoration,
+  'menu.background': role.raised,
+  'menu.foreground': role.text,
+  'menu.border': role.decoration,
+  'menu.selectionBackground': role.text,
+  'menu.selectionForeground': role.screen,
+  'menu.separatorBackground': role.decoration,
+  'notifications.background': role.raised,
+  'notifications.foreground': role.text,
+  'notifications.border': role.decoration,
+  'notificationCenterHeader.background': role.raised,
+  'notificationsErrorIcon.foreground': role.error,
+  'notificationsWarningIcon.foreground': role.warning,
+  'notificationsInfoIcon.foreground': role.info,
+
+  // Diff
+  'diffEditor.insertedLineBackground': role.addedFill,
+  'diffEditor.removedLineBackground': role.removedFill,
+  'diffEditor.insertedTextBackground': alpha(role.success, '33'),
+  'diffEditor.removedTextBackground': alpha(role.error, '44'),
+  'diffEditor.border': role.decoration,
+
+  // Git and problems
+  'gitDecoration.addedResourceForeground': role.success,
+  'gitDecoration.untrackedResourceForeground': role.success,
+  'gitDecoration.modifiedResourceForeground': role.info,
+  'gitDecoration.deletedResourceForeground': role.error,
+  'gitDecoration.conflictingResourceForeground': role.warning,
+  'gitDecoration.ignoredResourceForeground': role.decoration,
+  'problemsErrorIcon.foreground': role.error,
+  'problemsWarningIcon.foreground': role.warning,
+  'problemsInfoIcon.foreground': role.info,
+
+  // Terminal: the same values as dist/vscode-terminal.settings.json
+  ...vscodeTerminalColors,
+  'terminal.border': role.decoration,
+};
+
+// Syntax: brightness levels of the one phosphor, as in the PowerShell colours below.
+const scope = (name, scopes, foreground, fontStyle) => ({
+  name,
+  scope: scopes,
+  settings: fontStyle === undefined ? { foreground } : { foreground, fontStyle },
+});
+const vscodeTokenColors = [
+  scope('Comment', ['comment', 'punctuation.definition.comment'], role.textDim, 'italic'),
+  scope('Keyword, storage', ['keyword', 'storage', 'storage.type', 'storage.modifier'], role.text),
+  scope('Operator', ['keyword.operator'], role.text),
+  scope('Type', ['entity.name.type', 'support.type', 'support.class', 'entity.other.inherited-class'], role.text),
+  scope('String', ['string', 'string.quoted', 'string.template'], role.textStrong),
+  scope('Number, constant', ['constant.numeric', 'constant.language', 'constant.other', 'support.constant'], role.textStrong),
+  scope('Function, class name', ['entity.name.function', 'support.function', 'entity.name.class', 'meta.function-call entity.name.function'], role.textStrong),
+  scope('Variable, property', ['variable', 'variable.other', 'variable.parameter', 'meta.object-literal.key', 'support.variable.property'], role.text),
+  scope('Tag', ['entity.name.tag'], role.textStrong),
+  scope('Attribute', ['entity.other.attribute-name'], role.text),
+  scope('Punctuation', ['punctuation', 'meta.brace', 'punctuation.separator', 'punctuation.terminator'], role.textDim),
+  scope('String delimiters', ['punctuation.definition.string'], role.textStrong),
+  scope('Escape, regex', ['constant.character.escape', 'string.regexp', 'constant.other.placeholder'], signal.magenta),
+  scope('Invalid', ['invalid', 'invalid.illegal'], role.error),
+  scope('Deprecated', ['invalid.deprecated'], role.warning),
+  scope('Diff inserted', ['markup.inserted', 'meta.diff.header.to-file'], role.success),
+  scope('Diff deleted', ['markup.deleted', 'meta.diff.header.from-file'], role.error),
+  scope('Diff changed', ['markup.changed', 'meta.diff.range'], role.info),
+  scope('Markdown heading', ['markup.heading', 'entity.name.section'], role.textStrong, 'bold'),
+  scope('Markdown bold', ['markup.bold'], role.textStrong, 'bold'),
+  scope('Markdown italic', ['markup.italic'], role.text, 'italic'),
+  scope('Markdown link', ['markup.underline.link', 'string.other.link'], role.prompt),
+  scope('Markdown code', ['markup.inline.raw', 'markup.fenced_code', 'markup.raw'], role.textStrong),
+  scope('Markdown quote', ['markup.quote'], role.textDim, 'italic'),
+];
+const vscodeSemanticTokenColors = {
+  comment: { foreground: role.textDim, italic: true },
+  keyword: role.text,
+  type: role.text,
+  class: role.textStrong,
+  interface: role.text,
+  enum: role.text,
+  function: role.textStrong,
+  method: role.textStrong,
+  string: role.textStrong,
+  number: role.textStrong,
+  regexp: signal.magenta,
+  variable: role.text,
+  'variable.readonly': role.textStrong,
+  parameter: role.text,
+  property: role.text,
+  'property.readonly': role.textStrong,
+  enumMember: role.textStrong,
+  '*.deprecated': { strikethrough: true },
+};
+
+const pluginManifest = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
+const THEME_FILE = 'eidotter-dos-86-color-theme.json';
+const vscode = {};
+vscode[`themes/${THEME_FILE}`] = JSON.stringify(
   {
-    'workbench.colorCustomizations': {
-      'terminal.background': role.screen,
-      'terminal.foreground': role.text,
-      'terminalCursor.foreground': role.cursor,
-      'terminalCursor.background': role.screen,
-      'terminal.selectionBackground': role.selection,
-      'terminal.selectionForeground': role.screen,
-      ...Object.fromEntries(ANSI_ORDER.map((slot) => [`terminal.ansi${cap(slot)}`, ansi[slot]])),
+    $schema: 'vscode://schemas/color-theme',
+    name: NAME,
+    type: 'dark',
+    semanticHighlighting: true,
+    colors: vscodeColors,
+    tokenColors: vscodeTokenColors,
+    semanticTokenColors: vscodeSemanticTokenColors,
+  },
+  null,
+  2
+) + '\n';
+vscode['package.json'] = JSON.stringify(
+  {
+    name: 'eidotter-dos-86',
+    displayName: NAME,
+    description: 'An amber phosphor colour theme, with red, green and yellow left honest. For VS Code, Antigravity and Cursor.',
+    version: pluginManifest.version,
+    publisher: 'cinimody',
+    license: 'MIT',
+    repository: { type: 'git', url: 'https://github.com/CinimoDY/eidotter-dos-86' },
+    engines: { vscode: '^1.70.0' },
+    categories: ['Themes'],
+    keywords: ['theme', 'amber', 'phosphor', 'retro', 'terminal', 'dark'],
+    contributes: {
+      themes: [{ label: NAME, uiTheme: 'vs-dark', path: `./themes/${THEME_FILE}` }],
     },
   },
   null,
   2
 ) + '\n';
+vscode['README.md'] = [
+  `# ${NAME}`,
+  '',
+  'An amber monochrome monitor for the editor: one phosphor at four brightness levels on a warm black, with the colours that carry meaning (errors, warnings, diffs, git status, links) left in their own colour.',
+  '',
+  'Generated from `tokens/dos-86.tokens.json` by `node build.mjs` in the [eiDotter DOS-86 repository](https://github.com/CinimoDY/eidotter-dos-86). Do not edit these files by hand.',
+  '',
+  '## Install (Antigravity, Cursor, VS Code)',
+  '',
+  '1. In this folder: `npx @vscode/vsce package`',
+  '2. Command palette: **Extensions: Install from VSIX…**, pick the `.vsix`',
+  `3. Command palette: **Preferences: Color Theme**, pick **${NAME}**`,
+  '',
+].join('\n');
+vscode['LICENSE'] = readFileSync(join(root, 'LICENSE'), 'utf8');
 
 // PowerShell: PSReadLine syntax colours, as 24-bit escape sequences (works in 5.1 and 7).
 const esc = (hex) => {
@@ -287,6 +629,11 @@ mkdirSync(join(root, 'themes'), { recursive: true });
 writeFileSync(join(root, 'themes', 'eidotter-dos-86.json'), out['claude-code.theme.json']);
 writeFileSync(join(root, 'colors.toml'), omarchy);
 for (const [file, content] of Object.entries(out)) writeFileSync(join(root, 'dist', file), content);
+// The VS Code extension is a folder of its own, so it can be packaged as it stands.
+for (const [file, content] of Object.entries(vscode)) {
+  mkdirSync(dirname(join(root, 'vscode', file)), { recursive: true });
+  writeFileSync(join(root, 'vscode', file), content);
+}
 
 // Shader constants: replace the value in each `const float NAME = ...;` line of both shaders.
 // A token with `shaders: ["glsl"]` goes only into the shaders with those extensions.
@@ -305,4 +652,4 @@ for (const file of shaders) {
   writeFileSync(shaderPath, shader);
 }
 
-console.log(`Wrote ${Object.keys(out).length} files to dist/ and ${hlsl.length} constants to ${shaders.join(' and ')}`);
+console.log(`Wrote ${Object.keys(out).length} files to dist/, ${Object.keys(vscode).length} to vscode/, and ${hlsl.length} constants to ${shaders.join(' and ')}`);

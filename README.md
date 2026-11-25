@@ -17,7 +17,8 @@ Part of the eiDotter design system's family. Design notes with the reasoning, th
 | Foot | Include `dist/foot.ini` from `foot.ini` | no | no |
 | kitty | `include` `dist/kitty.conf` | no | no |
 | Alacritty | `import` `dist/alacritty.toml` | no | no |
-| VS Code, Cursor, Antigravity | Merge `dist/vscode-terminal.settings.json` into user settings. Themes the integrated terminal only, not the editor | no | no |
+| Antigravity, Cursor, VS Code | In `vscode/`, run `npx @vscode/vsce package`. Then, from the command palette, run Extensions: Install from VSIX… and pick the `.vsix`; then Preferences: Color Theme → eiDotter DOS-86. Themes the editor, workbench and integrated terminal. Antigravity's own agent panels may not follow the theme's colour keys | no | no |
+| Antigravity, Cursor, VS Code (terminal only) | To keep your editor theme, merge `dist/vscode-terminal.settings.json` into user settings instead. Themes only the integrated terminal | no | no |
 | Web | `dist/dos-86.css`: every value as a CSS custom property | no | no |
 
 "Tried: no" means the file is generated in the documented format and has not been loaded in that application yet.
@@ -34,7 +35,7 @@ Edit `tokens/dos-86.tokens.json`, then run:
 node build.mjs
 ```
 
-This rewrites `dist/`, `themes/`, `colors.toml`, and the constants at the top of both shaders. No dependencies.
+This rewrites `dist/`, `themes/`, `vscode/`, `colors.toml`, and the constants at the top of both shaders. No dependencies.
 
 To add an application, add one block to `build.mjs` that maps from `role` and `ansi`. Map from roles, not from raw colours.
 

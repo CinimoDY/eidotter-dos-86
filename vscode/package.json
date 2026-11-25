@@ -1,0 +1,35 @@
+{
+  "name": "eidotter-dos-86",
+  "displayName": "eiDotter DOS-86",
+  "description": "An amber phosphor colour theme, with red, green and yellow left honest. For VS Code, Antigravity and Cursor.",
+  "version": "0.1.0",
+  "publisher": "cinimody",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CinimoDY/eidotter-dos-86"
+  },
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "amber",
+    "phosphor",
+    "retro",
+    "terminal",
+    "dark"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "eiDotter DOS-86",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eidotter-dos-86-color-theme.json"
+      }
+    ]
+  }
+}
