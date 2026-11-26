@@ -17,7 +17,7 @@ Part of the eiDotter design system's family. Design notes with the reasoning, th
 | Foot | Include `dist/foot.ini` from `foot.ini` | no | no |
 | kitty | `include` `dist/kitty.conf` | no | no |
 | Alacritty | `import` `dist/alacritty.toml` | no | no |
-| Antigravity, Cursor, VS Code | In `vscode/`, run `npx @vscode/vsce package`. Then, from the command palette, run Extensions: Install from VSIX… and pick the `.vsix`; then Preferences: Color Theme → eiDotter DOS-86. Themes the editor, workbench and integrated terminal. Antigravity's own agent panels may not follow the theme's colour keys | no | no |
+| Antigravity, Cursor, VS Code | From the command palette, run Extensions: Install from VSIX… and pick `vscode/eidotter-dos-86-<version>.vsix` (after changing the tokens, rebuild it with `npx @vscode/vsce package` in `vscode/`); then Preferences: Color Theme → eiDotter DOS-86. Themes the editor, workbench and integrated terminal. Antigravity's own agent panels may not follow the theme's colour keys | no | no |
 | Antigravity, Cursor, VS Code (terminal only) | To keep your editor theme, merge `dist/vscode-terminal.settings.json` into user settings instead. Themes only the integrated terminal | no | no |
 | Web | `dist/dos-86.css`: every value as a CSS custom property | no | no |
 
